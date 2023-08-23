@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/App/App';
+import App from './components/App';
 
 
 const root = ReactDOM.createRoot(
@@ -9,7 +9,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <h1>Agenda</h1>
-    <App />
+    <div className="container">
+      <h1 className='d-flex justify-content-center mb-5'>Agenda</h1>
+      <App />
+    </div>
   </React.StrictMode>
 );
