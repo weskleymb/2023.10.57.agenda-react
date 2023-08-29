@@ -1,13 +1,14 @@
 import React from 'react';
 import IContato from '../../types/contato';
 import Botao from '../Botao';
+import Item from './Item';
 
 interface ITableProps {
     contatos: IContato[];
-    contatoSelecionado?: IContato;
+    selecionaContato: (selecionaContato: IContato) => void;
 }
 
-function Table({ contatos }: ITableProps) {
+function Table({ contatos, selecionaContato }: ITableProps) {
 
     // const contatos: IContato[] = [
     //     { nome: "Maria", fone: "1111-1111" },
@@ -28,17 +29,10 @@ function Table({ contatos }: ITableProps) {
             </thead>
             <tbody>
                 {contatos.map((contato, indice) => (
-                    <tr key={ indice }>
-                        <td>{ contato.nome }</td>
-                        <td>{ contato.fone }</td>
-                        <td>
-                            <Botao type="button" className="btn btn-success btn-sm me-2">
-                                <i className="fas fa-edit"></i>
-                            </Botao>
-                            <Botao type="button" className="btn btn-danger btn-sm">
-                                <i className="fas fa-trash"></i>
-                            </Botao>
-                        </td>
+                    <tr>
+                        <Item 
+                            contato={contato}
+                            selecionaContato={selecionaContato} />
                     </tr>
                 ))}
             </tbody>
