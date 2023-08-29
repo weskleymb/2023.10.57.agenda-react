@@ -1,10 +1,17 @@
 import React from "react";
 
-function Botao() {
+interface IBotaoProps {
+    type?: "button" | "submit" | "reset" | undefined;
+    className?: string;
+    onClick?: () => void;
+    children?: React.ReactNode;
+}
+
+function Botao({type, className, onClick, children}: IBotaoProps) {
     return (
-        <div>
-            <button>Botão</button>
-        </div>
+        <button type={type} className={className} onClick={onClick}>
+            { children }
+        </button>
     );
 }
 

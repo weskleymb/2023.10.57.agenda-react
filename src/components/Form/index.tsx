@@ -1,41 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Botao from '../Botao';
+import IContato from '../../types/contato';
 
-function Form() {
+interface IFormularioProps {
+    setContatos: React.Dispatch<React.SetStateAction<IContato[]>>;
+}
 
-    interface IFormulario {
-        nome: string;
-        fone: string;
-    }
-    // função que será executada quando o formulário for submetido
-    function salvar(event: React.FormEvent<HTMLFormElement>) {
-        // previne o comportamento padrão do formulário
-        event.preventDefault();
-        // converte o evento para um elemento do DOM
-        const formulario = event.target as HTMLFormElement;
-        // cria um objeto FormData a partir do formulário
-        const dados = new FormData(formulario);
-        // cria um contato com os dados do formulário
-        const contato: IFormulario = {
-            nome: dados.get('nome') as string,
-            fone: dados.get('fone') as string
-        };
-        // imprime o contato no console
-        console.log(contato);
-    }
+function Form({ setContatos }: IFormularioProps) {
 
-    function teste() {
-        console.log('teste');
+    const [nome, setNome] = useState("");
+    const [fone, setFone] = useState("");
+
+    function adicionarContato(evento: React.FormEvent<HTMLFormElement>) {
+        evento.preventDefault();
+        setContatos((contatos) => [...contatos, { nome, fone }]
+        );
+        setNome("");
+        setFone("");
+        const formulario = evento.target as HTMLFormElement;
+        document.getElementById("nome")?.focus();
+        formulario.reset();
     }
 
     return (
-        <form id="formulario-de-cadastro" onSubmit={salvar}>
+        <form id="formulario-de-cadastro" onSubmit={adicionarContato}>
             <div className="mb-3">
                 <label htmlFor="nome" className="form-label">Nome:</label>
                 <div className="input-group">
                     <span className="input-group-text">
                         <i className="fas fa-user"></i>
                     </span>
-                    <input type="text" className="form-control" name="nome" id="nome" />
+                    <input type="text" 
+                        className="form-control" 
+                        name="nome" 
+                        id="nome"
+                        onChange={evento => setNome(evento.target.value)} />
                 </div>
             </div>
             <div className="mb-3">
@@ -44,20 +43,22 @@ function Form() {
                     <span className="input-group-text">
                         <i className="fas fa-phone"></i>
                     </span>
-                    <input type="tel" className="form-control" name="fone" id="fone" />
+                    <input type="tel" 
+                        className="form-control" 
+                        name="fone" 
+                        id="fone" 
+                        onChange={evento => setFone(evento.target.value)}/>
                 </div>
             </div>
             <div className="mb-3">
-                <button
-                    type="submit"
-                    className="btn btn-primary btn-lg"
-                    onClick={teste}
-                >
+                <Botao type="submit" 
+                    className="btn btn-primary btn-lg me-2">
                     <i className="fas fa-floppy-disk"></i> Salvar
-                </button>
-                <button type="reset" className="btn btn-danger btn-lg">
+                </Botao>
+                <Botao type="reset" 
+                    className="btn btn-danger btn-lg">
                     <i className="fas fa-broom"></i> Limpar
-                </button>
+                </Botao>
             </div>
         </form>
     );
